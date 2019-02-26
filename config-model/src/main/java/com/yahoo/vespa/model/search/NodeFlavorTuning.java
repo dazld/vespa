@@ -2,6 +2,7 @@
 package com.yahoo.vespa.model.search;
 
 import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.vespa.config.search.core.ProtonConfig;
 
 import static java.lang.Long.min;
@@ -51,7 +52,7 @@ public class NodeFlavorTuning implements ProtonConfig.Producer {
 
     private void setHwInfo(ProtonConfig.Builder builder) {
         builder.hwinfo.disk.size((long)nodeFlavor.getMinDiskAvailableGb() * GB);
-        builder.hwinfo.disk.shared(nodeFlavor.getType().equals(Flavor.Type.DOCKER_CONTAINER));
+        builder.hwinfo.disk.shared(nodeFlavor.getType().equals(FlavorType.DOCKER_CONTAINER));
         builder.hwinfo.memory.size((long)nodeFlavor.getMinMainMemoryAvailableGb() * GB);
         builder.hwinfo.cpu.cores((int)nodeFlavor.getMinCpuCores());
     }

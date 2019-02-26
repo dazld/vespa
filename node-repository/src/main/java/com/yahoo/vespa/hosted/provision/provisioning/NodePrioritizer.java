@@ -4,6 +4,7 @@ package com.yahoo.vespa.hosted.provision.provisioning;
 import com.yahoo.config.provision.ApplicationId;
 import com.yahoo.config.provision.ClusterSpec;
 import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.NodeType;
 import com.yahoo.log.LogLevel;
 import com.yahoo.transaction.Mutex;
@@ -248,7 +249,7 @@ class NodePrioritizer {
 
     private boolean isDocker() {
         Flavor flavor = getFlavor(requestedNodes);
-        return (flavor != null) && flavor.getType().equals(Flavor.Type.DOCKER_CONTAINER);
+        return (flavor != null) && flavor.getType().equals(FlavorType.DOCKER_CONTAINER);
     }
 
     private static int compareForRelocation(Node a, Node b) {

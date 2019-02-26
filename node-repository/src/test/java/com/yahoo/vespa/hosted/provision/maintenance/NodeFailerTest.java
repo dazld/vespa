@@ -2,7 +2,7 @@
 package com.yahoo.vespa.hosted.provision.maintenance;
 
 import com.yahoo.cloud.config.ConfigserverConfig;
-import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.NodeType;
 import com.yahoo.vespa.applicationmodel.ServiceInstance;
 import com.yahoo.vespa.applicationmodel.ServiceStatus;
@@ -318,9 +318,9 @@ public class NodeFailerTest {
 
         // Two ready nodes and a ready docker node die, but only 2 of those are failed out
         tester.clock.advance(Duration.ofMinutes(180));
-        Node dockerNode = ready.stream().filter(node -> node.flavor().getType() == Flavor.Type.DOCKER_CONTAINER).findFirst().get();
+        Node dockerNode = ready.stream().filter(node -> node.flavor().getType() == FlavorType.DOCKER_CONTAINER).findFirst().get();
         List<Node> otherNodes = ready.stream()
-                               .filter(node -> node.flavor().getType() != Flavor.Type.DOCKER_CONTAINER)
+                               .filter(node -> node.flavor().getType() != FlavorType.DOCKER_CONTAINER)
                                .collect(Collectors.toList());
         tester.allNodesMakeAConfigRequestExcept(otherNodes.get(0), otherNodes.get(2), dockerNode);
         tester.failer.run();

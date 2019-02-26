@@ -3,7 +3,7 @@ package com.yahoo.vespa.hosted.provision.maintenance;
 
 import com.yahoo.config.provision.ClusterSpec;
 import com.yahoo.config.provision.Environment;
-import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.SystemName;
 import com.yahoo.config.provision.Zone;
 import com.yahoo.vespa.hosted.provision.Node;
@@ -123,7 +123,7 @@ public class FailedExpirer extends Maintainer {
 
     /** Returns whether the current node fail count should be used as an indicator of hardware issue */
     private boolean failCountIndicatesHardwareIssue(Node node) {
-        if (node.flavor().getType() == Flavor.Type.DOCKER_CONTAINER) return false;
+        if (node.flavor().getType() == FlavorType.DOCKER_CONTAINER) return false;
         return (zone.environment() == Environment.prod || zone.environment() == Environment.staging) &&
                node.status().failCount() >= maxAllowedFailures;
     }

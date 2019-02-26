@@ -2,7 +2,7 @@
 package com.yahoo.vespa.model.search;
 
 import com.yahoo.collections.Pair;
-import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.internal.NodeFlavor;
 import com.yahoo.config.provisioning.FlavorsConfig;
 import com.yahoo.vespa.config.search.core.ProtonConfig;
 import org.junit.Test;
@@ -10,10 +10,9 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static com.yahoo.vespa.model.search.NodeFlavorTuning.MB;
 import static com.yahoo.vespa.model.search.NodeFlavorTuning.GB;
+import static com.yahoo.vespa.model.search.NodeFlavorTuning.MB;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author geirst
@@ -187,14 +186,14 @@ public class NodeFlavorTuningTest {
     private static ProtonConfig getConfig(FlavorsConfig.Flavor.Builder flavorBuilder) {
         getConfig(flavorBuilder, new ProtonConfig.Builder());
         flavorBuilder.name("my_flavor");
-        NodeFlavorTuning tuning = new NodeFlavorTuning(new Flavor(new FlavorsConfig.Flavor(flavorBuilder)));
+        NodeFlavorTuning tuning = new NodeFlavorTuning(new NodeFlavor(new FlavorsConfig.Flavor(flavorBuilder)));
         ProtonConfig.Builder protonBuilder = new ProtonConfig.Builder();
         tuning.getConfig(protonBuilder);
         return new ProtonConfig(protonBuilder);
     }
     private static ProtonConfig getConfig(FlavorsConfig.Flavor.Builder flavorBuilder, ProtonConfig.Builder protonBuilder) {
         flavorBuilder.name("my_flavor");
-        NodeFlavorTuning tuning = new NodeFlavorTuning(new Flavor(new FlavorsConfig.Flavor(flavorBuilder)));
+        NodeFlavorTuning tuning = new NodeFlavorTuning(new NodeFlavor(new FlavorsConfig.Flavor(flavorBuilder)));
         tuning.getConfig(protonBuilder);
         return new ProtonConfig(protonBuilder);
     }

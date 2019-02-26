@@ -5,6 +5,7 @@ import com.yahoo.config.provision.ApplicationId;
 import com.yahoo.config.provision.ClusterMembership;
 import com.yahoo.config.provision.ClusterSpec;
 import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.SystemName;
 import com.yahoo.config.provision.TenantName;
 import com.yahoo.config.provision.Zone;
@@ -285,7 +286,7 @@ class NodeAllocation {
                 .filter(NodeSpec.CountNodeSpec.class::isInstance)
                 .map(NodeSpec.CountNodeSpec.class::cast)
                 .map(spec -> new FlavorCount(spec.getFlavor(), spec.fulfilledDeficitCount(acceptedOfRequestedFlavor)))
-                .filter(flavorCount -> flavorCount.getFlavor().getType() == Flavor.Type.DOCKER_CONTAINER)
+                .filter(flavorCount -> flavorCount.getFlavor().getType() == FlavorType.DOCKER_CONTAINER)
                 .filter(flavorCount -> flavorCount.getCount() > 0);
     }
 

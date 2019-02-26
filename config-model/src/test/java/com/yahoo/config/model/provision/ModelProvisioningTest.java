@@ -9,6 +9,7 @@ import com.yahoo.config.model.deploy.TestProperties;
 import com.yahoo.config.provision.ClusterMembership;
 import com.yahoo.config.provision.Flavor;
 import com.yahoo.config.provision.Zone;
+import com.yahoo.config.provision.internal.NodeFlavor;
 import com.yahoo.config.provisioning.FlavorsConfig;
 import com.yahoo.container.core.ApplicationMetadataConfig;
 import com.yahoo.search.config.QrStartConfig;
@@ -1740,7 +1741,7 @@ public class ModelProvisioningTest {
     }
 
     private static Flavor createFlavorFromDiskSetting(String name, boolean fastDisk) {
-        return new Flavor(new FlavorsConfig.Flavor(new FlavorsConfig.Flavor.Builder().
+        return new NodeFlavor(new FlavorsConfig.Flavor(new FlavorsConfig.Flavor.Builder().
                 name(name).fastDisk(fastDisk)));
     }
 
@@ -1796,7 +1797,7 @@ public class ModelProvisioningTest {
     private static long GB = 1024 * 1024 * 1024;
 
     private static Flavor createFlavorFromMemoryAndDisk(String name, int memoryGb, int diskGb) {
-        return new Flavor(new FlavorsConfig.Flavor(new FlavorsConfig.Flavor.Builder().
+        return new NodeFlavor(new FlavorsConfig.Flavor(new FlavorsConfig.Flavor.Builder().
                 name(name).minMainMemoryAvailableGb(memoryGb).minDiskAvailableGb(diskGb)));
     }
 

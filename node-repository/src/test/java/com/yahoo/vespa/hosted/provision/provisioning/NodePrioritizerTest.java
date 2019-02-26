@@ -5,7 +5,7 @@ import com.yahoo.component.Version;
 import com.yahoo.config.provision.ApplicationId;
 import com.yahoo.config.provision.ClusterMembership;
 import com.yahoo.config.provision.ClusterSpec;
-import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.NodeFlavors;
 import com.yahoo.config.provision.NodeType;
 import com.yahoo.config.provisioning.FlavorsConfig;
@@ -79,9 +79,9 @@ public class NodePrioritizerTest {
 
     private static FlavorsConfig flavorsConfig() {
         FlavorConfigBuilder b = new FlavorConfigBuilder();
-        b.addFlavor("host-large", 6., 6., 6, Flavor.Type.BARE_METAL);
-        b.addFlavor("d1", 1, 1., 1, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d2", 2, 2., 2, Flavor.Type.DOCKER_CONTAINER);
+        b.addFlavor("host-large", 6., 6., 6, FlavorType.BARE_METAL);
+        b.addFlavor("d1", 1, 1., 1, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d2", 2, 2., 2, FlavorType.DOCKER_CONTAINER);
         return b.build();
     }
 }

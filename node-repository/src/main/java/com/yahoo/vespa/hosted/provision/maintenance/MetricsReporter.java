@@ -4,6 +4,7 @@ package com.yahoo.vespa.hosted.provision.maintenance;
 import com.yahoo.component.Version;
 import com.yahoo.config.provision.ApplicationId;
 import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.NodeType;
 import com.yahoo.jdisc.Metric;
 import com.yahoo.vespa.applicationmodel.HostName;
@@ -14,7 +15,6 @@ import com.yahoo.vespa.hosted.provision.NodeRepository;
 import com.yahoo.vespa.hosted.provision.node.Allocation;
 import com.yahoo.vespa.hosted.provision.node.History;
 import com.yahoo.vespa.hosted.provision.provisioning.DockerHostCapacity;
-import com.yahoo.vespa.orchestrator.HostNameNotFoundException;
 import com.yahoo.vespa.orchestrator.Orchestrator;
 import com.yahoo.vespa.orchestrator.status.HostStatus;
 import com.yahoo.vespa.service.monitor.ServiceMonitor;
@@ -226,10 +226,10 @@ public class MetricsReporter extends Maintainer {
         metric.set("hostedVespa.docker.freeCapacityDisk", capacity.getFreeCapacityTotal().getDisk(), null);
 
         List<Flavor> dockerFlavors = nodeRepository().getAvailableFlavors().getFlavors().stream()
-                .filter(f -> f.getType().equals(Flavor.Type.DOCKER_CONTAINER))
+                .filter(f -> f.getType().equals(FlavorType.DOCKER_CONTAINER))
                 .collect(Collectors.toList());
         for (Flavor flavor : dockerFlavors) {
-            Metric.Context context = getContextAt("flavor", flavor.name());
+            Metric.Context context = getContextAt("flavor", flavor.flavorName());
             metric.set("hostedVespa.docker.freeCapacityFlavor", capacity.freeCapacityInFlavorEquivalence(flavor), context);
             metric.set("hostedVespa.docker.hostsAvailableFlavor", capacity.getNofHostsAvailableFor(flavor), context);
         }

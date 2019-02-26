@@ -1,7 +1,7 @@
 // Copyright 2017 Yahoo Holdings. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.vespa.hosted.provision.maintenance;
 
-import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.vespa.hosted.provision.Node;
 import com.yahoo.vespa.hosted.provision.NodeRepository;
 import com.yahoo.vespa.hosted.provision.node.History;
@@ -40,7 +40,7 @@ public class NodeRebooter extends Maintainer {
         EnumSet<Node.State> targetStates = EnumSet.of(Node.State.active, Node.State.ready);
         List<Node> nodesToReboot = nodeRepository().getNodes().stream()
                 .filter(node -> targetStates.contains(node.state()))
-                .filter(node -> node.flavor().getType() != Flavor.Type.DOCKER_CONTAINER)
+                .filter(node -> node.flavor().getType() != FlavorType.DOCKER_CONTAINER)
                 .filter(this::shouldReboot)
                 .collect(Collectors.toList());
 

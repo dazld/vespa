@@ -2,7 +2,7 @@
 package com.yahoo.vespa.hosted.provision;
 
 import com.yahoo.config.provision.DockerImage;
-import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.NodeFlavors;
 import com.yahoo.config.provision.NodeType;
 import com.yahoo.config.provision.Zone;
@@ -71,9 +71,9 @@ public class NodeRepositoryTester {
 
     private FlavorsConfig createConfig() {
         FlavorConfigBuilder b = new FlavorConfigBuilder();
-        b.addFlavor("default", 2., 4., 100, Flavor.Type.BARE_METAL).cost(3);
-        b.addFlavor("small", 1., 2., 50, Flavor.Type.BARE_METAL).cost(2);
-        b.addFlavor("docker", 1., 2., 50, Flavor.Type.DOCKER_CONTAINER).cost(1);
+        b.addFlavor("default", 2., 4., 100, FlavorType.BARE_METAL).cost(3);
+        b.addFlavor("small", 1., 2., 50, FlavorType.BARE_METAL).cost(2);
+        b.addFlavor("docker", 1., 2., 50, FlavorType.DOCKER_CONTAINER).cost(1);
         return b.build();
     }
 

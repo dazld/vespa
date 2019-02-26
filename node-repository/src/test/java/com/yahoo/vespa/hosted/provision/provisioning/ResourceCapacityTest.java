@@ -2,6 +2,8 @@
 package com.yahoo.vespa.hosted.provision.provisioning;
 
 import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
+import com.yahoo.config.provision.internal.NodeFlavor;
 import com.yahoo.config.provisioning.FlavorsConfig;
 import org.junit.Test;
 
@@ -17,24 +19,24 @@ public class ResourceCapacityTest {
     @Test
     public void basic_capacity_and_compare_operations() {
         FlavorConfigBuilder b = new FlavorConfigBuilder();
-        b.addFlavor("host-large", 6., 6., 6, Flavor.Type.BARE_METAL);
-        b.addFlavor("host-small", 3., 3., 3, Flavor.Type.BARE_METAL);
-        b.addFlavor("d-1", 1, 1., 1, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-2", 2, 2., 2, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3", 3, 3., 3, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-disk", 3, 3., 5, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-mem", 3, 5., 3, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-cpu", 5, 3., 3, Flavor.Type.DOCKER_CONTAINER);
+        b.addFlavor("host-large", 6., 6., 6, FlavorType.BARE_METAL);
+        b.addFlavor("host-small", 3., 3., 3, FlavorType.BARE_METAL);
+        b.addFlavor("d-1", 1, 1., 1, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-2", 2, 2., 2, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3", 3, 3., 3, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-disk", 3, 3., 5, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-mem", 3, 5., 3, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-cpu", 5, 3., 3, FlavorType.DOCKER_CONTAINER);
 
         FlavorsConfig flavors = b.build();
-        Flavor hostLargeFlavor = new Flavor(flavors.flavor(0));
-        Flavor hostSmallFlavor = new Flavor(flavors.flavor(1));
-        Flavor d1Flavor = new Flavor(flavors.flavor(2));
-        Flavor d2Flavor = new Flavor(flavors.flavor(3));
-        Flavor d3Flavor = new Flavor(flavors.flavor(4));
-        Flavor d3DiskFlavor = new Flavor(flavors.flavor(5));
-        Flavor d3MemFlavor = new Flavor(flavors.flavor(6));
-        Flavor d3CPUFlavor = new Flavor(flavors.flavor(7));
+        Flavor hostLargeFlavor = new NodeFlavor(flavors.flavor(0));
+        Flavor hostSmallFlavor = new NodeFlavor(flavors.flavor(1));
+        Flavor d1Flavor = new NodeFlavor(flavors.flavor(2));
+        Flavor d2Flavor = new NodeFlavor(flavors.flavor(3));
+        Flavor d3Flavor = new NodeFlavor(flavors.flavor(4));
+        Flavor d3DiskFlavor = new NodeFlavor(flavors.flavor(5));
+        Flavor d3MemFlavor = new NodeFlavor(flavors.flavor(6));
+        Flavor d3CPUFlavor = new NodeFlavor(flavors.flavor(7));
 
         ResourceCapacity capacityOfHostSmall = ResourceCapacity.of(hostSmallFlavor);
 

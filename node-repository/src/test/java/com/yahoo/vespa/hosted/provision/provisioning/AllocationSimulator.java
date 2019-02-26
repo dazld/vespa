@@ -6,6 +6,7 @@ import com.yahoo.config.provision.ApplicationId;
 import com.yahoo.config.provision.ClusterMembership;
 import com.yahoo.config.provision.ClusterSpec;
 import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.NodeFlavors;
 import com.yahoo.config.provision.NodeType;
 import com.yahoo.vespa.hosted.provision.Node;
@@ -16,7 +17,7 @@ import com.yahoo.vespa.hosted.provision.node.History;
 import com.yahoo.vespa.hosted.provision.node.Reports;
 import com.yahoo.vespa.hosted.provision.node.Status;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -43,14 +44,14 @@ public class AllocationSimulator {
         // Setup flavors
         //
         FlavorConfigBuilder b = new FlavorConfigBuilder();
-        b.addFlavor("host-large", 8., 8., 8, Flavor.Type.BARE_METAL);
-        b.addFlavor("host-small", 5., 5., 5, Flavor.Type.BARE_METAL);
-        b.addFlavor("d-1", 1, 1., 1, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-2", 2, 2., 2, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3", 3, 3., 3, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-disk", 3, 3., 5, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-mem", 3, 5., 3, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-cpu", 5, 3., 3, Flavor.Type.DOCKER_CONTAINER);
+        b.addFlavor("host-large", 8., 8., 8, FlavorType.BARE_METAL);
+        b.addFlavor("host-small", 5., 5., 5, FlavorType.BARE_METAL);
+        b.addFlavor("d-1", 1, 1., 1, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-2", 2, 2., 2, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3", 3, 3., 3, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-disk", 3, 3., 5, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-mem", 3, 5., 3, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-cpu", 5, 3., 3, FlavorType.DOCKER_CONTAINER);
         flavors = new NodeFlavors(b.build());
 
         //

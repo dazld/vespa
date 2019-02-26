@@ -9,6 +9,7 @@ import com.yahoo.config.provision.ClusterMembership;
 import com.yahoo.config.provision.ClusterSpec;
 import com.yahoo.config.provision.Environment;
 import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.HostSpec;
 import com.yahoo.config.provision.NodeType;
 import com.yahoo.config.provision.OutOfCapacityException;
@@ -314,15 +315,15 @@ public class DynamicDockerAllocationTest {
 
     private FlavorsConfig flavorsConfig() {
         FlavorConfigBuilder b = new FlavorConfigBuilder();
-        b.addFlavor("host-large", 6., 6., 6, Flavor.Type.BARE_METAL);
-        b.addFlavor("host-small", 3., 3., 3, Flavor.Type.BARE_METAL);
-        b.addFlavor("host-medium", 4., 4., 4, Flavor.Type.BARE_METAL);
-        b.addFlavor("d-1", 1, 1., 1, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-2", 2, 2., 2, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3", 3, 3., 3, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-disk", 3, 3., 5, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-mem", 3, 5., 3, Flavor.Type.DOCKER_CONTAINER);
-        b.addFlavor("d-3-cpu", 5, 3., 3, Flavor.Type.DOCKER_CONTAINER);
+        b.addFlavor("host-large", 6., 6., 6, FlavorType.BARE_METAL);
+        b.addFlavor("host-small", 3., 3., 3, FlavorType.BARE_METAL);
+        b.addFlavor("host-medium", 4., 4., 4, FlavorType.BARE_METAL);
+        b.addFlavor("d-1", 1, 1., 1, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-2", 2, 2., 2, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3", 3, 3., 3, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-disk", 3, 3., 5, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-mem", 3, 5., 3, FlavorType.DOCKER_CONTAINER);
+        b.addFlavor("d-3-cpu", 5, 3., 3, FlavorType.DOCKER_CONTAINER);
         return b.build();
     }
 

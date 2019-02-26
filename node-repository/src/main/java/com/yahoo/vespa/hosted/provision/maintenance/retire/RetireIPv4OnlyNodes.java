@@ -3,7 +3,7 @@ package com.yahoo.vespa.hosted.provision.maintenance.retire;
 
 import com.google.common.net.InetAddresses;
 import com.yahoo.config.provision.Environment;
-import com.yahoo.config.provision.Flavor;
+import com.yahoo.config.provision.FlavorType;
 import com.yahoo.config.provision.RegionName;
 import com.yahoo.config.provision.SystemName;
 import com.yahoo.config.provision.Zone;
@@ -51,7 +51,7 @@ public class RetireIPv4OnlyNodes implements RetirementPolicy {
 
     @Override
     public Optional<String> shouldRetire(Node node) {
-        if (node.flavor().getType() == Flavor.Type.VIRTUAL_MACHINE) return Optional.empty();
+        if (node.flavor().getType() == FlavorType.VIRTUAL_MACHINE) return Optional.empty();
         boolean shouldRetire = node.ipAddresses().stream()
                 .map(InetAddresses::forString)
                 .allMatch(address -> address instanceof Inet4Address);
