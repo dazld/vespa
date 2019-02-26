@@ -343,7 +343,37 @@
       "public static final enum com.yahoo.config.provision.Environment perf"
     ]
   },
-  "com.yahoo.config.provision.Flavor$Type": {
+  "com.yahoo.config.provision.Flavor": {
+    "superClass": "java.lang.Object",
+    "interfaces": [],
+    "attributes": [
+      "public",
+      "interface",
+      "abstract"
+    ],
+    "methods": [
+      "public abstract java.lang.String flavorName()",
+      "public abstract java.lang.String getDescription()",
+      "public abstract int cost()",
+      "public abstract boolean isStock()",
+      "public abstract boolean hasFastDisk()",
+      "public abstract double getMinCpuCores()",
+      "public abstract double getMinMainMemoryAvailableGb()",
+      "public abstract double getMinDiskAvailableGb()",
+      "public abstract double getBandwidth()",
+      "public abstract boolean isRetired()",
+      "public abstract com.yahoo.config.provision.FlavorType getType()",
+      "public boolean isDocker()",
+      "public abstract int getIdealHeadroom()",
+      "public java.lang.String canonicalName()",
+      "public boolean isCanonical()",
+      "public abstract java.util.List replaces()",
+      "public boolean satisfies(com.yahoo.config.provision.Flavor)",
+      "public boolean isLargerThan(com.yahoo.config.provision.Flavor)"
+    ],
+    "fields": []
+  },
+  "com.yahoo.config.provision.FlavorType": {
     "superClass": "java.lang.Enum",
     "interfaces": [],
     "attributes": [
@@ -352,48 +382,15 @@
       "enum"
     ],
     "methods": [
-      "public static com.yahoo.config.provision.Flavor$Type[] values()",
-      "public static com.yahoo.config.provision.Flavor$Type valueOf(java.lang.String)"
+      "public static com.yahoo.config.provision.FlavorType[] values()",
+      "public static com.yahoo.config.provision.FlavorType valueOf(java.lang.String)"
     ],
     "fields": [
-      "public static final enum com.yahoo.config.provision.Flavor$Type undefined",
-      "public static final enum com.yahoo.config.provision.Flavor$Type BARE_METAL",
-      "public static final enum com.yahoo.config.provision.Flavor$Type VIRTUAL_MACHINE",
-      "public static final enum com.yahoo.config.provision.Flavor$Type DOCKER_CONTAINER"
+      "public static final enum com.yahoo.config.provision.FlavorType undefined",
+      "public static final enum com.yahoo.config.provision.FlavorType BARE_METAL",
+      "public static final enum com.yahoo.config.provision.FlavorType VIRTUAL_MACHINE",
+      "public static final enum com.yahoo.config.provision.FlavorType DOCKER_CONTAINER"
     ]
-  },
-  "com.yahoo.config.provision.Flavor": {
-    "superClass": "java.lang.Object",
-    "interfaces": [],
-    "attributes": [
-      "public"
-    ],
-    "methods": [
-      "public void <init>(com.yahoo.config.provisioning.FlavorsConfig$Flavor)",
-      "public java.lang.String name()",
-      "public int cost()",
-      "public boolean isStock()",
-      "public double getMinMainMemoryAvailableGb()",
-      "public double getMinDiskAvailableGb()",
-      "public boolean hasFastDisk()",
-      "public double getBandwidth()",
-      "public double getMinCpuCores()",
-      "public java.lang.String getDescription()",
-      "public boolean isRetired()",
-      "public com.yahoo.config.provision.Flavor$Type getType()",
-      "public boolean isDocker()",
-      "public int getIdealHeadroom()",
-      "public java.lang.String canonicalName()",
-      "public boolean isCanonical()",
-      "public java.util.List replaces()",
-      "public boolean satisfies(com.yahoo.config.provision.Flavor)",
-      "public void freeze()",
-      "public boolean isLargerThan(com.yahoo.config.provision.Flavor)",
-      "public int hashCode()",
-      "public boolean equals(java.lang.Object)",
-      "public java.lang.String toString()"
-    ],
-    "fields": []
   },
   "com.yahoo.config.provision.HostFilter": {
     "superClass": "java.lang.Object",
@@ -551,6 +548,7 @@
     ],
     "methods": [
       "public void <init>(com.yahoo.config.provisioning.FlavorsConfig)",
+      "public void <init>(java.util.Collection)",
       "public java.util.List getFlavors()",
       "public java.util.Optional getFlavor(java.lang.String)",
       "public com.yahoo.config.provision.Flavor getFlavorOrThrow(java.lang.String)"
