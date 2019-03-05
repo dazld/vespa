@@ -13,7 +13,6 @@ import com.yahoo.search.Result;
 import com.yahoo.search.dispatch.ResponseMonitor;
 import com.yahoo.search.dispatch.SearchInvoker;
 import com.yahoo.search.dispatch.searchcluster.Node;
-import com.yahoo.search.result.Coverage;
 import com.yahoo.search.result.ErrorMessage;
 import com.yahoo.search.searchchain.Execution;
 
@@ -73,20 +72,20 @@ public class FS4SearchInvoker extends SearchInvoker implements ResponseMonitor<F
     @Override
     protected Result getSearchResult(CacheKey cacheKey, Execution execution) throws IOException {
         if (pendingSearchError != null) {
-            return errorResult(pendingSearchError);
+            return errorResult(query, pendingSearchError);
         }
         BasicPacket[] basicPackets;
 
         try {
             basicPackets = channel.receivePackets(query.getTimeLeft(), 1);
         } catch (ChannelTimeoutException e) {
-            return errorResult(ErrorMessage.createTimeout("Timeout while waiting for " + getName()));
+            return errorResult(query, ErrorMessage.createTimeout("Timeout while waiting for " + getName()));
         } catch (InvalidChannelException e) {
-            return errorResult(ErrorMessage.createBackendCommunicationError("Invalid channel for " + getName()));
+            return errorResult(query, ErrorMessage.createBackendCommunicationError("Invalid channel for " + getName()));
         }
 
         if (basicPackets.length == 0) {
-            return errorResult(ErrorMessage.createBackendCommunicationError(getName() + " got no packets back"));
+            return errorResult(query, ErrorMessage.createBackendCommunicationError(getName() + " got no packets back"));
         }
 
         if (isLoggingFine())
@@ -124,14 +123,6 @@ public class FS4SearchInvoker extends SearchInvoker implements ResponseMonitor<F
             }
         }
         return result;
-    }
-
-    private Result errorResult(ErrorMessage errorMessage) {
-        Result error = new Result(query, errorMessage);
-        Coverage errorCoverage = new Coverage(0, 0, 0);
-        errorCoverage.setNodesTried(1);
-        error.setCoverage(errorCoverage);
-        return error;
     }
 
     @Override

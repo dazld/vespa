@@ -1,0 +1,74 @@
+// Copyright 2019 Oath Inc. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
+
+syntax = "proto3";
+
+package searchlib.searchprotocol.protobuf;
+
+option java_package = "ai.vespa.searchlib.searchprotocol.protobuf";
+
+message Query {
+	int32 offset = 1;
+	int32 hits = 2;
+	int64 timeout = 3; // milliseconds
+
+	repeated SortField sorting = 4;
+	string session_key = 5;
+	string document_type = 6;
+
+	bool dump_features = 7;
+	bool estimate = 8;
+	bool cache_grouping = 9;
+	bool cache_query = 10;
+
+	string rank_profile = 11;
+	string rank_session = 12;
+	repeated StringProperty rank_feature = 13;
+	repeated TensorProperty rank_feature_tensor = 14;
+	repeated StringProperty rank_property = 15;
+	repeated TensorProperty rank_property_tensor = 16;
+
+	repeated StringProperty highlight_term = 17;
+
+	bytes grouping_blob = 18;   // serialized opaquely like now, to be changed later
+	string geo_location = 19; // to be moved into query_tree
+	bytes query_tree_blob = 20; // serialized opaquely like now, to be changed later
+}
+
+message TensorProperty {
+	string name = 1;
+	bytes value = 2;
+}
+
+message StringProperty {
+	string name = 1;
+	string value = 2;
+}
+
+message SortField {
+	bool ascending = 1;
+	string field = 2;
+}
+
+message Result {
+	enum DegradedReason {
+		NONE = 0;
+		DEGRADED_BY_MATCH_PHASE = 1;
+    	DEGRADED_BY_TIMEOUT = 2;
+    	DEGRADED_BY_ADAPTIVE_TIMEOUT = 3;
+	}
+	int64 coverage_docs = 1;
+	int64 active_docs = 2;
+	int64 soon_active_docs = 3;
+	repeated DegradedReason degraded_reason = 4;
+	int32 nodes_queried = 5;
+	int32 nodes_replied = 6;
+
+	repeated Document document = 8;
+
+	bytes grouping_blob = 16; // serialized opaquely like now, to be changed later
+}
+
+message Document {
+	bytes global_id = 1;
+	double relevance = 2;
+}

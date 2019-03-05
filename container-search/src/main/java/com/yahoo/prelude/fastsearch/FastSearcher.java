@@ -54,8 +54,6 @@ public class FastSearcher extends VespaBackEndSearcher {
 
     private final Backend dispatchBackend;
 
-    private final FS4InvokerFactory fs4InvokerFactory;
-
     /**
      * Creates a Fastsearcher.
      *
@@ -78,7 +76,6 @@ public class FastSearcher extends VespaBackEndSearcher {
         init(fs4ResourcePool.getServerId(), docSumParams, clusterParams, cacheParams, documentdbInfoConfig);
         this.dispatchBackend = dispatchBackend;
         this.dispatcher = dispatcher;
-        this.fs4InvokerFactory = new FS4InvokerFactory(fs4ResourcePool, dispatcher.searchCluster(), this);
     }
 
     /**
@@ -210,14 +207,14 @@ public class FastSearcher extends VespaBackEndSearcher {
      * on the same host.
      */
     private SearchInvoker getSearchInvoker(Query query) {
-        Optional<SearchInvoker> invoker = dispatcher.getSearchInvoker(query, fs4InvokerFactory);
+        Optional<SearchInvoker> invoker = dispatcher.getSearchInvoker(query, this);
         if (invoker.isPresent()) {
             return invoker.get();
         }
 
         Optional<Node> direct = getDirectNode(query);
         if(direct.isPresent()) {
-            return fs4InvokerFactory.getSearchInvoker(query, direct.get());
+            return dispatcher.getFS4InvokerFactory().createSearchInvoker(query, direct.get(), this);
         }
         return new FS4SearchInvoker(this, query, dispatchBackend.openChannel(), Optional.empty());
     }
@@ -229,14 +226,14 @@ public class FastSearcher extends VespaBackEndSearcher {
      */
     private FillInvoker getFillInvoker(Result result) {
         Query query = result.getQuery();
-        Optional<FillInvoker> invoker = dispatcher.getFillInvoker(result, this, getDocumentDatabase(query), fs4InvokerFactory);
+        Optional<FillInvoker> invoker = dispatcher.getFillInvoker(result, this);
         if (invoker.isPresent()) {
             return invoker.get();
         }
 
         Optional<Node> direct = getDirectNode(query);
         if (direct.isPresent()) {
-            return fs4InvokerFactory.getFillInvoker(query, direct.get());
+            return dispatcher.getFS4InvokerFactory().createFillInvoker(result, direct.get(), this);
         }
         return new FS4FillInvoker(getServerId(), this, query, dispatchBackend);
     }
