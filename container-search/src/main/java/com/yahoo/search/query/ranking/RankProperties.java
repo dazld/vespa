@@ -114,10 +114,6 @@ public class RankProperties implements Cloneable {
     }
 
     public void addToProtobuf(Search.Request.Builder builder, boolean includeQueryData) {
-        List<Object> sessionId = properties.get(GetDocSumsPacket.sessionIdKey);
-        if (sessionId != null && !sessionId.isEmpty()) {
-            builder.setRankSession(sessionId.get(0).toString());
-        }
         if (includeQueryData) {
             MapConverter.convertMultiMap(properties, propB -> {
                 if (!GetDocSumsPacket.sessionIdKey.equals(propB.getName())) {

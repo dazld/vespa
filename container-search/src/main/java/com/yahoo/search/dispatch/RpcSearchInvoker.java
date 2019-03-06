@@ -56,7 +56,7 @@ public class RpcSearchInvoker extends SearchInvoker {
             return;
         }
 
-        var payload = query.toProtobuf(true).toByteArray();
+        var payload = query.toProtobuf(searcher.getServerId(), true).toByteArray();
         double timeoutSeconds = ((double) query.getTimeLeft() - 3.0) / 1000.0;
         Compressor.Compression compressionResult = resourcePool.compressor().compress(compression, payload);
         resourcePool.client().search(nodeConnection, compressionResult.type(), payload.length, compressionResult.data(), this,

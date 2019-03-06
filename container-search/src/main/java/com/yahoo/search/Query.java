@@ -1062,7 +1062,7 @@ public class Query extends com.yahoo.processing.Request implements Cloneable {
         return Collections.<String,Boolean>emptyMap();
     }
 
-    public Search.Request toProtobuf(boolean includeQueryData) {
+    public Search.Request toProtobuf(String serverId, boolean includeQueryData) {
         var builder = Search.Request.newBuilder()
             .setHits(hits)
             .setOffset(offset)
@@ -1072,7 +1072,8 @@ public class Query extends com.yahoo.processing.Request implements Cloneable {
         model.addToProtobuf(builder, includeQueryData);
 
         if(getGroupingSessionCache() || getRanking().getQueryCache()) {
-            builder.setSessionKey(getSessionId().toString()); // XXX should be: getSessionId(serverKey)
+            // TODO verify that the session key is included whenever rank properties would have been
+            builder.setSessionKey(getSessionId(serverId).toString());
         }
         if(properties().getBoolean(Model.ESTIMATE)) {
             builder.setEstimate(true);
