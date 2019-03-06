@@ -37,6 +37,7 @@ import static com.yahoo.text.Lowercase.toLowerCase;
  * @author bratseth
  */
 public class Model implements Cloneable {
+    private static final int INITIAL_SERIALIZATION_BUFFER_SIZE = 10 * 1024;
 
     /** The type representing the property arguments consumed by this */
     private static final QueryProfileType argumentType;
@@ -516,9 +517,19 @@ public class Model implements Cloneable {
         if (documentDbName != null) {
             builder.setDocumentType(documentDbName);
         }
-        ByteBuffer treeBuffer = ByteBuffer.allocate(10 * 1024); // XXX size
-        getQueryTree().encode(treeBuffer);
-        builder.setQueryTreeBlob(ByteString.copyFrom(treeBuffer));
+        int bufferSize = INITIAL_SERIALIZATION_BUFFER_SIZE;
+        boolean success = false;
+        while(!success) {
+            try {
+                ByteBuffer treeBuffer = ByteBuffer.allocate(bufferSize);
+                getQueryTree().encode(treeBuffer);
+                treeBuffer.flip();
+                builder.setQueryTreeBlob(ByteString.copyFrom(treeBuffer));
+                success = true;
+            } catch(java.nio.BufferOverflowException e) {
+                bufferSize *= 2;
+            }
+        }
     }
 
 }
