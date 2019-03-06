@@ -21,17 +21,16 @@ message Request {
     bool cache_query = 10;
 
     string rank_profile = 11;
-    string rank_session = 12;
-    repeated StringProperty rank_feature = 13;
-    repeated TensorProperty rank_feature_tensor = 14;
-    repeated StringProperty rank_property = 15;
-    repeated TensorProperty rank_property_tensor = 16;
+    repeated StringProperty rank_feature = 12;
+    repeated TensorProperty rank_feature_tensor = 13;
+    repeated StringProperty rank_property = 14;
+    repeated TensorProperty rank_property_tensor = 15;
 
-    repeated StringProperty highlight_term = 17;
+    repeated StringProperty highlight_term = 16;
 
-    bytes grouping_blob = 18;   // serialized opaquely like now, to be changed later
-    string geo_location = 19; // to be moved into query_tree
-    bytes query_tree_blob = 20; // serialized opaquely like now, to be changed later
+    bytes grouping_blob = 17;   // serialized opaquely like now, to be changed later
+    string geo_location = 18; // to be moved into query_tree
+    bytes query_tree_blob = 19; // serialized opaquely like now, to be changed later
 }
 
 message TensorProperty {
