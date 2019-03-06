@@ -1,8 +1,8 @@
 // Copyright 2017 Yahoo Holdings. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.search;
 
-import ai.vespa.searchlib.searchprotocol.protobuf.Searchprotocol;
-import ai.vespa.searchlib.searchprotocol.protobuf.Searchprotocol.Result.DegradedReason;
+import ai.vespa.searchlib.searchprotocol.protobuf.Search;
+import ai.vespa.searchlib.searchprotocol.protobuf.Search.Result.DegradedReason;
 import com.google.protobuf.ByteString;
 import com.yahoo.collections.ListMap;
 import com.yahoo.document.GlobalId;
@@ -343,7 +343,7 @@ public final class Result extends com.yahoo.processing.Response implements Clone
         return headers;
     }
 
-    public static Result fromProtobuf(Query query, Searchprotocol.Result protobuf, DocumentDatabase documentDatabase) {
+    public static Result fromProtobuf(Query query, Search.Result protobuf, DocumentDatabase documentDatabase) {
         var result = new Result(query);
 
         result.setCoverage(Coverage.fromProtobuf(protobuf));
@@ -379,8 +379,8 @@ public final class Result extends com.yahoo.processing.Response implements Clone
         return result;
     }
 
-    public Searchprotocol.Result toProtobuf() {
-        var builder = Searchprotocol.Result.newBuilder();
+    public Search.Result toProtobuf() {
+        var builder = Search.Result.newBuilder();
 
         var coverage = getCoverage(false);
         if(coverage != null) {
@@ -398,7 +398,7 @@ public final class Result extends com.yahoo.processing.Response implements Clone
         }
 
         hits.iterator().forEachRemaining(hit -> {
-            var docBuilder = Searchprotocol.Document.newBuilder();
+            var docBuilder = Search.Document.newBuilder();
             if (hit.getRelevance() != null) {
                 docBuilder.setRelevance(hit.getRelevance().getScore());
             }

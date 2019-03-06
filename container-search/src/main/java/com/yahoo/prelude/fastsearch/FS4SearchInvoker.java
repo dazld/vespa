@@ -18,7 +18,6 @@ import com.yahoo.search.searchchain.Execution;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -27,6 +26,7 @@ import java.util.logging.Logger;
  * @author ollivir
  */
 public class FS4SearchInvoker extends SearchInvoker implements ResponseMonitor<FS4Channel> {
+    private static final Logger log = Logger.getLogger(FS4SearchInvoker.class.getName());
 
     private final VespaBackEndSearcher searcher;
     private FS4Channel channel;
@@ -46,8 +46,7 @@ public class FS4SearchInvoker extends SearchInvoker implements ResponseMonitor<F
 
     @Override
     protected void sendSearchRequest(Query query, QueryPacket queryPacket) throws IOException {
-        if (isLoggingFine())
-            getLogger().finest("sending query packet");
+        log.finest("sending query packet");
 
         if (queryPacket == null) {
             // query changed for subchannel
@@ -88,14 +87,12 @@ public class FS4SearchInvoker extends SearchInvoker implements ResponseMonitor<F
             return errorResult(query, ErrorMessage.createBackendCommunicationError(getName() + " got no packets back"));
         }
 
-        if (isLoggingFine())
-            getLogger().finest("got packets " + basicPackets.length + " packets");
+        log.finest(() -> "got packets " + basicPackets.length + " packets");
 
         basicPackets[0].ensureInstanceOf(QueryResultPacket.class, getName());
         QueryResultPacket resultPacket = (QueryResultPacket) basicPackets[0];
 
-        if (isLoggingFine())
-            getLogger().finest("got query packet. " + "docsumClass=" + query.getPresentation().getSummary());
+        log.finest(() -> "got query packet. " + "docsumClass=" + query.getPresentation().getSummary());
 
         if (query.getPresentation().getSummary() == null)
             query.getPresentation().setSummary(searcher.getDefaultDocsumClass());
@@ -135,14 +132,6 @@ public class FS4SearchInvoker extends SearchInvoker implements ResponseMonitor<F
 
     private String getName() {
         return searcher.getName();
-    }
-
-    private Logger getLogger() {
-        return searcher.getLogger();
-    }
-
-    private boolean isLoggingFine() {
-        return getLogger().isLoggable(Level.FINE);
     }
 
     @Override

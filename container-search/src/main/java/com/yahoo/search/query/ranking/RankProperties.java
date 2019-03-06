@@ -1,7 +1,7 @@
 // Copyright 2017 Yahoo Holdings. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.search.query.ranking;
 
-import ai.vespa.searchlib.searchprotocol.protobuf.Searchprotocol;
+import ai.vespa.searchlib.searchprotocol.protobuf.Search;
 import com.yahoo.fs4.GetDocSumsPacket;
 import com.yahoo.fs4.MapEncoder;
 import com.yahoo.searchlib.protobuf.MapConverter;
@@ -113,7 +113,7 @@ public class RankProperties implements Cloneable {
         return JSON.encode(properties);
     }
 
-    public void addToProtobuf(Searchprotocol.Query.Builder builder, boolean includeQueryData) {
+    public void addToProtobuf(Search.Request.Builder builder, boolean includeQueryData) {
         List<Object> sessionId = properties.get(GetDocSumsPacket.sessionIdKey);
         if (sessionId != null && !sessionId.isEmpty()) {
             builder.setRankSession(sessionId.get(0).toString());

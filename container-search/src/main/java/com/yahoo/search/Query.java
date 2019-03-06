@@ -1,7 +1,7 @@
 // Copyright 2017 Yahoo Holdings. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.search;
 
-import ai.vespa.searchlib.searchprotocol.protobuf.Searchprotocol;
+import ai.vespa.searchlib.searchprotocol.protobuf.Search;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.ByteString;
@@ -1062,8 +1062,8 @@ public class Query extends com.yahoo.processing.Request implements Cloneable {
         return Collections.<String,Boolean>emptyMap();
     }
 
-    public Searchprotocol.Query toProtobuf(boolean includeQueryData) {
-        var builder = Searchprotocol.Query.newBuilder()
+    public Search.Request toProtobuf(boolean includeQueryData) {
+        var builder = Search.Request.newBuilder()
             .setHits(hits)
             .setOffset(offset)
             .setTimeout(getTimeLeft());
@@ -1085,9 +1085,7 @@ public class Query extends com.yahoo.processing.Request implements Cloneable {
                 g.serialize(gbuf);
             }
             gbuf.getBuf().flip();
-            byte[] blob = new byte [gbuf.getBuf().limit()];
-            gbuf.getBuf().get(blob);
-            builder.setGroupingBlob(ByteString.copyFrom(blob)); // XXX several copies
+            builder.setGroupingBlob(ByteString.copyFrom(gbuf.getBuf().getByteBuffer()));
         }
 
         presentation.addToProtobuf(builder, includeQueryData);

@@ -6,7 +6,7 @@ package searchlib.searchprotocol.protobuf;
 
 option java_package = "ai.vespa.searchlib.searchprotocol.protobuf";
 
-message Query {
+message Request {
     int32 offset = 1;
     int32 hits = 2;
     int64 timeout = 3; // milliseconds

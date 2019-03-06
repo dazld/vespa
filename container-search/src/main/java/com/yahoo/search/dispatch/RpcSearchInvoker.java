@@ -1,7 +1,7 @@
 // Copyright 2018 Yahoo Holdings. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.search.dispatch;
 
-import ai.vespa.searchlib.searchprotocol.protobuf.Searchprotocol;
+import ai.vespa.searchlib.searchprotocol.protobuf.Search;
 import com.yahoo.compress.CompressionType;
 import com.yahoo.compress.Compressor;
 import com.yahoo.fs4.QueryPacket;
@@ -89,7 +89,7 @@ public class RpcSearchInvoker extends SearchInvoker {
         CompressionType compression = CompressionType.valueOf(searchResponse.compression());
         byte[] payload = resourcePool.compressor().decompress(searchResponse.compressedPayload(), compression,
                 searchResponse.uncompressedSize());
-        var protobuf = Searchprotocol.Result.parseFrom(payload);
+        var protobuf = Search.Result.parseFrom(payload);
         Result result = Result.fromProtobuf(query, protobuf, searcher.getDocumentDatabase(query));
         result.hits().unorderedIterator().forEachRemaining(hit -> {
             if(hit instanceof FastHit) {

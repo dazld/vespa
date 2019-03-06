@@ -1,7 +1,7 @@
 // Copyright 2017 Yahoo Holdings. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.search.query;
 
-import ai.vespa.searchlib.searchprotocol.protobuf.Searchprotocol;
+import ai.vespa.searchlib.searchprotocol.protobuf.Search;
 import com.google.protobuf.ByteString;
 import com.yahoo.language.Language;
 import com.yahoo.language.Linguistics;
@@ -512,7 +512,7 @@ public class Model implements Cloneable {
         return false;
     }
 
-    public void addToProtobuf(Searchprotocol.Query.Builder builder, boolean encodeQueryData) {
+    public void addToProtobuf(Search.Request.Builder builder, boolean encodeQueryData) {
         if (documentDbName != null) {
             builder.setDocumentType(documentDbName);
         }
