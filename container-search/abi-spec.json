@@ -1776,7 +1776,7 @@
       "public bridge synthetic com.yahoo.processing.Request clone()",
       "public bridge synthetic com.yahoo.processing.request.Properties properties()",
       "public bridge synthetic com.yahoo.component.provider.FreezableClass clone()",
-      "public ai.vespa.searchlib.searchprotocol.protobuf.Search$Request toProtobuf(boolean)",
+      "public ai.vespa.searchlib.searchprotocol.protobuf.Search$Request toProtobuf(java.lang.String, boolean)",
       "public bridge synthetic java.lang.Object clone()"
     ],
     "fields": [
